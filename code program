@@ -1,0 +1,158 @@
+import os
+from prettytable import PrettyTable
+os.system("cls")
+# list untuk menyimpan data sepatu
+data_Sepatu = [
+    ["1", " vans slip on checkerboard ", 800000,12],
+    ["2", "nike airfoce v2 ", 2100000, 10],
+    ["3", "vans oldskool", 800000 , 9],
+    ["4", "nike dunk low panda", 2000000 , 6],
+    ["5", "adidas yeezy boost 350 v2", 4500000, 4],
+    ["6", "vans sk8 high", 1200000, 14],
+    ["7", "nike blazer mid", 1500000, 5],
+]
+
+# menampilkan seluruh sepatu yang terdapat dalam database dengan prettytable
+def show_sepatu():
+    table = PrettyTable()
+    table.field_names = ["nomor sepatu", "jenis sepatu", "Harga", "Stok sepatu"]
+    for item in data_Sepatu :
+        table.add_row(item)
+    print(table)
+
+    
+#program Pembeli
+def transaksi():
+    while True:
+        # menampilkan seluruh sepatu yang tersedia
+        print("Daftar sepatu yang Tersedia")
+        show_sepatu()
+        
+        # input nomor sepatu dan jumlah yang ingin dibeli
+        nomor_sepatu = input("Masukkan nomor sepatu yang ingin dibeli: ")
+        qty = int(input("Masukkan jumlah yang ingin dibeli: "))
+        # memeriksa apabila jumlah yang ingin dibeli melebihi stok
+        for sepatu in data_Sepatu:
+            if sepatu[0] == nomor_sepatu:
+                if qty > sepatu[3]:
+                    print("Maaf, stok sepatu tidak cukup!")
+                    break
+        else:
+            # melakukan update stok pada item yg dibeli
+            for i in range(len(data_Sepatu)):
+                if data_Sepatu[i][0] == nomor_sepatu:
+                    data_Sepatu[i][3] -= qty
+                    
+                    # menampilkan informasi instruksi pembayaran
+                    print("Berhasil membeli", qty, "sepatu", data_Sepatu[i][1])
+                    print("total pembayaran dibeli : ", qty * data_Sepatu[i][2])
+                    return
+        # menampilkan kembali tampilan daftar sepatu apabila stok tidak mencukupi
+        print()
+
+# Admin
+def create():
+    # input data sepatu yang baru
+    nomor_sepatu = input("Masukkan nomor sepatu: ")
+    nama_sepatu = input("Masukkan nama sepatu: ")
+    harga_sepatu = input("Masukkan harga sepatu: ")
+    stok_sepatu = int(input("Masukkan stok sepatu: "))
+    
+    # menambahkan sepatu yang baru ke dalam database
+    data_Sepatu.append([nomor_sepatu, nama_sepatu, harga_sepatu, stok_sepatu])
+    
+    # menampilkan daftar sepatu lengkap dengan sepatu baru yang ditambahkan
+    show_sepatu()
+
+def read():
+    # menampilkan seluruh sepatu yang terdapat dalam database
+    show_sepatu()
+
+def update():
+    # input nomor sepatu yang ingin diperbarui
+    nomor_sepatu = input("Masukkan nomor sepatu yang ingin di update pada data: ")
+    for i in range(len(data_Sepatu)):
+        if data_Sepatu[i][0] == nomor_sepatu:
+            # input data sepatu yang baru
+            nama_sepatu = input("Masukkan nama sepatu baru: ")
+            harga_sepatu = input("Masukkan harga sepatu baru: ")
+            stok_sepatu = int(input("Masukkan stok sepatu baru: "))
+            
+            # melakukan update sepatu yang dipilih
+            data_Sepatu[i][1] = nama_sepatu
+            data_Sepatu[i][2] = harga_sepatu
+            data_Sepatu[i][3] = stok_sepatu
+            
+            # menampilkan daftar sepatu yang terbaru
+            show_sepatu()
+            break
+    else:
+        print("sepatu tidak ditemukan")
+
+def delete():
+    # input nomor sepatu yang ingin dihapus
+    nomor_sepatu = input("Masukkan nomor sepatu yang ingin dihapus: ")
+    for i in range(len(data_Sepatu)):
+        if data_Sepatu[i][0] == nomor_sepatu:
+            # menghapus sepatu sesuai input nomor sepatu
+            data_Sepatu.pop(i)
+            
+            # menampilkan daftar sepatu yang terbaru
+            show_sepatu()
+            break
+    else:
+        print("Item tidak ditemukan")
+    
+
+
+#program utama toko sepatu
+while True:
+    print("=========================")
+    print("       TOKO SEPATU    ")
+    print("=========================")
+    print("1. Log In : ")
+    print("2. Sign Out : ")
+    
+    
+    login = input("Silahkan Pilih opsi Diatas ini :")
+    
+    #login akan langsung menentukan pembeli atau admin
+    if login == "1" :
+        username = input("Masukkan Username Anda : ")
+        password = input("Masukkan Password Anda : ")
+        
+        #program admin
+        if username == "adminavenue" and password == "adminkick" :
+            print("======================")
+            print("admin sepatu branded")
+            print("======================")
+            print("1. Menambah sepatu")
+            print("2. Melihat sepatu")
+            print("3. Update sepatu")
+            print("4. Hapus sepatu")
+            print("5. Kembali")
+
+            admin_choice = input("Pilih menu: ")
+            if admin_choice == "1":
+                create()
+            elif admin_choice == "2":
+                read()
+            elif admin_choice == "3":
+                update()
+            elif admin_choice == "4":
+                delete()
+            elif admin_choice == "5":
+                continue
+            else:
+                print("Menu tidak tersedia")
+        #jika username dan password yang di masukan bukan akun admin akan kepindah ke akun pembeli
+        else:
+            print("===================================================")
+            print("Selamat Berbelanja di Toko Sepatu ", username)
+            print("===================================================")
+            transaksi()
+    elif login == "2":
+        print("Terima kasih telah berbelanja di toko sepatu kami")
+        break
+    else:
+        print("opsi Anda Tidak Valid")

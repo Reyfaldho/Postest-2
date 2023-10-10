@@ -21,9 +21,7 @@ B.Opsi Pembeli
 
 2.Beli Barang : Pembeli akan diminta untuk memasukkan nomor sepatu yang ingin dibeli dan jumlahnya. 
 
-3.Pembayaran : Pembeli akan diminta untuk melakukan pembayaran untuk barang-barang yang sudah dibeli. Total harga pembayaran akan ditampilkan.
-
--Keluar dari Mode Pembeli : Ini akan mengakhiri mode pembeli dan kembali ke menu awal, di mana pengguna diminta untuk memilih login/sign out lagi.
+3.Pembayaran : Pembeli akan diminta untuk melakukan pembayaran untuk barang-barang yang sudah dibeli. Total harga pembayaran akan ditampilkan. Selesai dari pembayaran akan diarahkan kembali ke halaman log in/ sign out.
 
 C.Output tambahan
 

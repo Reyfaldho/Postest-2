@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class ShioCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] shio = {"Tikus", "Kerbau", "Macan", "Kelinci", "Naga", "Ular", "Kuda", "Kambing", "Monyet", "Ayam", "Anjing", "Babi"};
+        char repeat;
+        
+        do {
+            int tahun = 0;
+            boolean validInput = false;
+
+            while (!validInput) {
+                System.out.print("Masukkan tahun lahir Anda: ");
+                
+                if (scanner.hasNextInt()) {
+                    tahun = scanner.nextInt();
+                    
+                    if (tahun >= 1900) {
+                        validInput = true;
+                    } else {
+                        System.out.println("Data Shio hanya tersedia mulai dari tahun 1900. Silakan masukkan lagi.");
+                    }
+                } else {
+                    System.out.println("Input tidak valid! Silakan masukkan angka tahun yang benar.");
+                    scanner.next();  
+                }
+            }
+            
+            int index = (tahun - 1900) % 12;
+            System.out.println("Shio Anda adalah: " + shio[index]);
+
+            System.out.print("Apakah Anda ingin menghitung lagi? (y/n): ");
+            repeat = scanner.next().charAt(0);
+            scanner.nextLine(); 
+            
+        } while (repeat == 'y' || repeat == 'Y');
+
+        System.out.println("Terima kasih telah menggunakan program ini.");
+        scanner.close();
+    }
+}
